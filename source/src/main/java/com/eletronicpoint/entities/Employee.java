@@ -1,5 +1,7 @@
 package com.eletronicpoint.entities;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,11 @@ public class Employee implements Serializable {
 
     private List<PointRegister> registers = new ArrayList<>();
 
+    public Employee(String password, String name, String role) {
+        this.password = password;
+        this.name = name;
+        this.role = role;
+    }
     public Employee(Integer idEmployee, String password, String name, String role) {
         this.idEmployee = idEmployee;
         this.password = password;
@@ -35,7 +42,14 @@ public class Employee implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String passwordCrypted = encoder.encode(password);
+        this.password = passwordCrypted;
+    }
+
+    public boolean verifyPassowrd(String password){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(password, this.password);
     }
 
     public String getName() {
@@ -60,6 +74,7 @@ public class Employee implements Serializable {
     public void removeRegister(PointRegister pointRegister) {
         this.registers.remove(pointRegister);
     }
+
 
     @Override
     public boolean equals(Object o) {

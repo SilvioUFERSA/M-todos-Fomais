@@ -5,7 +5,9 @@ import com.eletronicpoint.entities.Employee;
 import java.util.List;
 import java.util.Optional;
 
-public interface IEmployeeDao {
+//todas asoperações que serão realizadas sobre o funcionarios
+
+public interface IEmployeeDAO {
 
     Employee save(Employee employee);
     Employee update(Employee employee);
