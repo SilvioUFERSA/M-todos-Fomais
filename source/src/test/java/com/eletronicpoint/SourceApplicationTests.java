@@ -16,9 +16,8 @@ class SourceApplicationTests {
 	void Employees() {
 		Employee employee = new Employee(1, "123", "silvio martins santos", "gerente");
 		Employee employee1 = new Employee(1, "123", "silvio martins santos", "gerente");
-		assertEquals(employee,employee1);
+		assertEquals(employee, employee1);
 	}
-
 	@Test
 	public void testCreateEmployee() {
 		Integer idEsperado = 1;
