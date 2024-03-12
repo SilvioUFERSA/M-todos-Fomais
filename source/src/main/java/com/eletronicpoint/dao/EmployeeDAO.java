@@ -13,7 +13,7 @@ public class EmployeeDAO implements IEmployeeDAO {
     @Override
     public Employee save(Employee employee) {
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "INSERT INTO employee (password_hash, nome, funcao) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO employee (password, name, role) VALUES (?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, employee.getPassword());

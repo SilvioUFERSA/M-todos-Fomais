@@ -27,8 +27,6 @@ public class Employee implements Serializable {
         this.role = role;
     }
 
-    // não queremos métodos 'sets' para: password e id;
-
     public Integer getIdEmployee() {
         return idEmployee;
     }

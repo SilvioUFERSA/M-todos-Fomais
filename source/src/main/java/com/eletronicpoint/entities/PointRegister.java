@@ -5,17 +5,21 @@ import java.time.format.DateTimeFormatter;
 
 public class PointRegister {
 
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); // formantando horario
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); // formantando horario
     private Integer idPoint;    //identificador unico
     private LocalDateTime localDateTime;    //data e horario
     private String type; // entrada ou saída
     private String justification; // justificativa
 
-    public PointRegister(Integer idPoint, LocalDateTime localDateTime, String type) {
-        this.idPoint = idPoint;
+    public PointRegister() {
+
+    }
+    public PointRegister(LocalDateTime localDateTime, String type, String justification) {
         this.localDateTime = localDateTime;
         this.type = type;
+        this.justification = justification;
     }
+
 
     // um construtor para caso haja justificativa de atraso por exemplo.
     public PointRegister(Integer idPoint, LocalDateTime localDateTime, String type, String justification) {
@@ -36,7 +40,7 @@ public class PointRegister {
     }
 
     public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+        return this.localDateTime;
     }
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
