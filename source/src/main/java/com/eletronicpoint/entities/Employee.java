@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Employee implements Serializable {
-    private Integer idEmployee;     //identificador unico
+    private Long idEmployee;     //identificador unico
     private String password;        //senha
     private String name;            //nome do funcionário
     private String role;            // função (ex: constureiro, vendedor, gerente)
@@ -20,18 +20,24 @@ public class Employee implements Serializable {
         this.name = name;
         this.role = role;
     }
-    public Employee(Integer idEmployee, String password, String name, String role) {
+    public Employee(Long idEmployee, String password, String name, String role) {
         this.idEmployee = idEmployee;
         this.password = password;
         this.name = name;
         this.role = role;
     }
 
-    public Integer getIdEmployee() {
+    public Employee(Long idEmployee, String name, String role) {
+        this.idEmployee = idEmployee;
+        this.name = name;
+        this.role = role;
+    }
+
+    public Long getIdEmployee() {
         return idEmployee;
     }
 
-    public void setIdEmployee(Integer idEmployee) {
+    public void setIdEmployee(Long idEmployee) {
         this.idEmployee = idEmployee;
     }
 
