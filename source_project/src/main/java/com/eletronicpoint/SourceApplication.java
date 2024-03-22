@@ -1,17 +1,14 @@
 package com.eletronicpoint;
 
-import com.eletronicpoint.dao.EmployeeDAO;
-import com.eletronicpoint.dao.PointRegisterDAO;
+import com.eletronicpoint.dao.*;
 import com.eletronicpoint.entities.Employee;
-import com.eletronicpoint.entities.PointRegister;
+import com.eletronicpoint.entities.Register;
+import com.eletronicpoint.entities.Type;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.awt.*;
-import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -24,16 +21,30 @@ public class SourceApplication {
 
 		SpringApplication.run(SourceApplication.class, args);
 
+		IEmployeeDAO employeeDAO = DaoFactory.createEmployeeDAO();
+		IPointRegisterDAO pointRegisterDAO = DaoFactory.createRegisterDAO();
+
+		Employee employee = new Employee("silvio martins santos", "1234", "costureiro");
+		System.out.println(employee);
+
+		employeeDAO.save(employee);
+
+		Register register = new Register(employee, LocalDateTime.now(), Type.valueOf("ENTRY"), "atraso por transito");
+		System.out.println(register);
+
+		pointRegisterDAO.save(register);
+
+		/*
 		EmployeeDAO employeeDAO = new EmployeeDAO();
 		PointRegisterDAO prDAO = new PointRegisterDAO();
-		List<PointRegister> listRegister = prDAO.findAll();
+		List<Register> listRegister = prDAO.findAll();
 		List<Employee> listEmployee = employeeDAO.findAll();
 
 		for (Employee e: listEmployee){
 			System.out.println("id:" + e.getIdEmployee() + " name:" + e.getName() + " role:" + e.getRole());
 		}
 
-		for (PointRegister pr: listRegister){
+		for (Register pr: listRegister){
 			System.out.println("id:" + pr.getIdPoint() + " date/hour:" + pr.getLocalDateTime() + " type:" + pr.getType() + " justfy:" + pr.getJustification());
 		}
 

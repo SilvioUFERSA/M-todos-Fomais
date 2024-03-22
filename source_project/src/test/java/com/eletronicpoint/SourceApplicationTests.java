@@ -1,11 +1,7 @@
 package com.eletronicpoint;
 
 import com.eletronicpoint.entities.Employee;
-import com.eletronicpoint.entities.PointRegister;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
