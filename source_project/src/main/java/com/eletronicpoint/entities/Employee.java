@@ -15,7 +15,6 @@ public class Employee implements Serializable {
     private Long id;
     private String name;
     private String passwordHash;
-    private byte[] salt;
     private String role;
 
     // um funcionário possui uma lista com todas suas entraas e saídas;
@@ -33,75 +32,46 @@ public class Employee implements Serializable {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getRole() {
         return role;
     }
-
     public void setRole(String role) {
         this.role = role;
     }
-
     public void addRegister(Register register) {
         this.registerList.add(register);
     }
     public void removeRegister(Register register) {
         this.registerList.remove(register);
     }
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id);
+        if (!(o instanceof Employee employee)) return false;
+        return Objects.equals(getId(), employee.getId()) && Objects.equals(getPasswordHash(), employee.getPasswordHash());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId(), getPasswordHash());
     }
-
-    // seção para tratamento de senhas
-                        public boolean verifyPassword(String password) {
-                            String passwordHashIn = hashPassword(password, this.salt);
-                            return passwordHashIn.equals(this.passwordHash);
-                        }
-
-                        private byte[] generateSalt() {
-                            byte[] salt = new byte[16];
-                            SecureRandom random = new SecureRandom();
-                            random.nextBytes(salt);
-                            return salt;
-                        }
-
-                        private String hashPassword(String password, byte[] salt) {
-                            try {
-                                PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-                                SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-                                byte[] hash = factory.generateSecret(spec).getEncoded();
-                                return Base64.getEncoder().encodeToString(hash);
-                            } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-                                e.printStackTrace();
-                                return null;
-                            }
-                        }
-                        public String getPasswordHash() {
-                            byte [] salt = generateSalt();
-                            return hashPassword(this.passwordHash,salt);
-                        }
 
     @Override
     public String toString() {

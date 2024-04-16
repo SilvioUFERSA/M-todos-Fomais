@@ -12,13 +12,12 @@ import java.util.Optional;
 
 public class PointRegisterDAO implements IPointRegisterDAO{
 
-
     @Override
     public Register save(Register pointRegister) {
         String sql = "INSERT INTO register(employee_id, datehour, type, justification) VALUES (?,?,?,?)";
 
-                LocalDateTime ldt = pointRegister.getDateEndTime();
-                Timestamp timesTamp = Timestamp.valueOf(ldt);
+        LocalDateTime ldt = pointRegister.getDateEndTime();
+        Timestamp timesTamp = Timestamp.valueOf(ldt);
 
         try(Connection connection = ConnectionFactory.getConnection()){
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -26,7 +25,6 @@ public class PointRegisterDAO implements IPointRegisterDAO{
             preparedStatement.setTimestamp(2, timesTamp);
             preparedStatement.setString(3,pointRegister.getType().toString());
             preparedStatement.setString(4, pointRegister.getJustification());
-
             preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -34,6 +32,8 @@ public class PointRegisterDAO implements IPointRegisterDAO{
 
             Long generatedID = resultSet.getLong("id");
             pointRegister.setId(generatedID);
+
+
 
         }catch (SQLException e) {
             throw new RuntimeException(e);
