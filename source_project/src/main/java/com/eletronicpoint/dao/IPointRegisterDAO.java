@@ -14,6 +14,6 @@ public interface IPointRegisterDAO {
     void delete(Integer id);
     List<Register> findAll();
     Optional<Register> findByDate(LocalDateTime localDateTime);
-    List<Register> findByEmployee(Employee employee);
+    List<Register> findByEmployeeID(Long id);
 
 }

@@ -13,6 +13,6 @@ public interface IEmployeeDAO {
     Employee update(Employee employee);
     Employee delete(Employee employee);
     List<Employee> findAll();
-    Optional<Employee> findById(Integer id); // optional pq posso buscar por um id que não existe
+    Optional<Employee> findById(Long id); // optional pq posso buscar por um id que não existe
     List<Employee> findByRole(Employee employee);
 }

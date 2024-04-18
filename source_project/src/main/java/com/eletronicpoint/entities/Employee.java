@@ -23,7 +23,15 @@ public class Employee implements Serializable {
     public Employee (){
 
     }
-    public Employee(String name, String password, String role){
+
+    public Employee(Long id ,String name, String role){
+        this.id = id;
+        this.name = name;
+        this.role = role;
+    }
+
+    public Employee(Long id ,String name, String password, String role){
+        this.id = id;
         this.name = name;
         this.passwordHash = password;
         this.role = role;
