@@ -2,16 +2,16 @@ package com.eletronicpoint.services;
 
 
 import com.eletronicpoint.entities.Register;
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Paragraph;
+import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class PDFgenerator {
@@ -24,6 +24,7 @@ public class PDFgenerator {
 
         // Add title and table headers
         document.add(new Paragraph("Register Report"));
+        document.add(new Paragraph("document generated in: " + formatLocalDateTime(LocalDateTime.now())));
         document.add(new Paragraph("\n"));
 
         PdfPTable table = new PdfPTable(5); // Adjust column count as needed
@@ -44,9 +45,15 @@ public class PDFgenerator {
             table.addCell(register.getJustification());
         }
 
+
         document.add(table);
 
         document.close();
+    }
+
+    private String formatLocalDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        return dateTime.format(formatter);
     }
 
 }

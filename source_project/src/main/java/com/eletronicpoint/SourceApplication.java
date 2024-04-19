@@ -26,11 +26,20 @@ public class SourceApplication {
 
 		Scanner sc = new Scanner(System.in);
 
-		Employee employee = new Employee(1000L,"SILVIO MARTINS SANTOS", "xxmyghm", "costureiro");
-		Employee employee1 = new Employee(1001L, "JOICY PEIXOTO DIAS", "abbccc", "gerente comercial");
-		Employee employee2 = new Employee(1002L, "RODRIGO RODRIGUES DA SILVA", "xesqdl123", "aux. administrativo");
+		//Employee employee = new Employee(1000L,"SILVIO MARTINS SANTOS", "xxmyghm", "costureiro");
+		//Employee employee1 = new Employee(1001L, "JOICY PEIXOTO DIAS", "abbccc", "gerente comercial");
+		//Employee employee2 = new Employee(1002L, "RODRIGO RODRIGUES DA SILVA", "xesqdl123", "aux. administrativo");
 
+		List<Register> registers = new ArrayList<>();
+		registers = pointRegisterDAO.findAll();
 
+		for(Register r : registers){
+			System.out.println(r);
+		}
+
+		PDFgenerator pdFgenerator = new PDFgenerator();
+
+		pdFgenerator.generatePDF(registers, "C:\\Cli\\pdfRegister.pdf");
 	}
 
 }

@@ -5,6 +5,7 @@ import com.eletronicpoint.entities.Register;
 import com.eletronicpoint.entities.Type;
 import com.eletronicpoint.infrastructure.ConnectionFactory;
 
+import java.net.ConnectException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class EmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public Optional<Employee> findById(Long id) {
+    public Employee findById(Long id) {
         String sql = "SELECT * FROM employee WHERE id = ?;";
 
         try(Connection connection = ConnectionFactory.getConnection()){
@@ -63,7 +64,7 @@ public class EmployeeDAO implements IEmployeeDAO {
                 employee.setPasswordHash(resultSet.getString("passwordhash"));
                 employee.setRole(resultSet.getString("role"));
 
-                return Optional.ofNullable(employee);
+                return employee;
             }
             return null;
 
@@ -76,4 +77,24 @@ public class EmployeeDAO implements IEmployeeDAO {
     public List<Employee> findByRole(Employee employee) {
         return null;
     }
+
+    @Override
+    public boolean verfyCredentials(Long employeeID, String password) {
+        String sql = "SELECT * FROM employee WHERE id = ? AND passwordhash = ?";
+
+        try(Connection connection = ConnectionFactory.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, employeeID);
+            preparedStatement.setString(2, password);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
