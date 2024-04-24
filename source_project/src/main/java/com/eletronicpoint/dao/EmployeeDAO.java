@@ -78,7 +78,10 @@ public class EmployeeDAO implements IEmployeeDAO {
         return null;
     }
 
+
     @Override
+    //@ requires id > 0;
+    //@ requires password != null;
     public boolean verfyCredentials(Long employeeID, String password) {
         String sql = "SELECT * FROM employee WHERE id = ? AND passwordhash = ?";
 
