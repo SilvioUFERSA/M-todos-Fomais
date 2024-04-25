@@ -80,8 +80,9 @@ public class EmployeeDAO implements IEmployeeDAO {
 
 
     @Override
-    //@ requires id > 0;
-    //@ requires password != null;
+    // [RF001] e [RF002]
+    //@ requires id > 0 && password != null;
+    //@ ensures \result == true || \result == false;
     public boolean verfyCredentials(Long employeeID, String password) {
         String sql = "SELECT * FROM employee WHERE id = ? AND passwordhash = ?";
 

@@ -46,9 +46,7 @@ public class SourceApplication {
 			}
 		}
 	}
-	//[RF004]  Justificativa do Funcionário
-	//@ requires true;
-	//@ ensures \result == true || \result == false;
+
 	private static boolean shouldExit() {
 		System.out.println("Credenciais inválidas. Deseja sair? (Digite 's' para sair OU 'n' para continuar)");
 		return sc.next().equalsIgnoreCase("s");
@@ -64,8 +62,9 @@ public class SourceApplication {
 		registerTime(employee);
 	}
 
-	//@ requires true;
-	//@ ensures \result == true || \result == false;
+	//[RF005] Gerente pode gerar relatório
+	//@ requires employee != null && employee.getRole().equalsIgnoreCase("gerente comercial");
+	//@ ensures \result == true ==> askForReport() == true;
 	private static boolean askForReport(Employee employee) {
 		System.out.println("Olá Gerente. Deseja imprimir um relatório?");
 		System.out.println("Digite 1 para SIM ou 2 para NÃO");
@@ -82,6 +81,10 @@ public class SourceApplication {
 		}
 	}
 
+	//[RF003] Registro de DATA E HORA automática e [RF004] Justificativa do Funcionário
+	//@ requires employee != null;
+	//@ requires type == Type.ENTRY || type == Type.EXIT;
+	//@ ensures justification == null || pointRegisterDAO.save(new Register(employee, LocalDateTime.now(), type, justification));
 	private static void registerTime(Employee employee) {
 		System.out.println("Digite 1 - ENTRADA do expediente");
 		System.out.println("Digite 2 - SAÍDA do expediente");
